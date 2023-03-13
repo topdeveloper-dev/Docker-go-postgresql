@@ -14,7 +14,7 @@ func Connect() {
 	db, err := GetDB()
 
 	if err != nil {
-		fmt.Println("No connection to database")
+		fmt.Println("No connection to database", err)
 		panic(err)
 	} else {
 		fmt.Println("Successfully connected!")

@@ -38,7 +38,7 @@ func AddUser(c *gin.Context) {
 		} else {
 			result := db.Create(&user)
 			if result.Error != nil {
-				data := utils.Https(500, "v1", "/adduser", "nternal Server Error")
+				data := utils.Https(500, "v1", "/adduser", "Internal Server Error")
 				c.JSON(http.StatusInternalServerError, data)
 			} else {
 				data := utils.Https(201, "v1", "/adduser", "Success")
