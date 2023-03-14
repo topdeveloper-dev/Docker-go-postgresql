@@ -6,14 +6,14 @@ ADD . /app
 
 WORKDIR /app
 
-COPY go.* ./
+COPY go.mod /app
+
+COPY go.sum /app
 
 RUN go mod download
 
-COPY . .
+COPY . /app
 
-RUN go build -o main .
+EXPOSE 8084
 
-EXPOSE 8000
-
-CMD ["/app/main"]
+CMD ["./main"]

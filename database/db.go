@@ -23,16 +23,23 @@ func Connect() {
 }
 
 func GetDB() (*gorm.DB, error) {
-	host := os.Getenv("DB_HOST")
+	// host := os.Getenv("DB_HOST")
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
 	dbname := os.Getenv("DB_NAME")
 	port := os.Getenv("DB_PORT")
 
-	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+"password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-	db, err := gorm.Open("postgres", psqlInfo)
-	if err != nil {
+	db, err := gorm.Open("postgres", "host=127.0.0.1 port=5432 user=pgadmin dbname=postgres password=postgres sslmode=disable")
+
+	db = db.Exec("CREATE DATABASE test_db;")
+
+	psqlInfo := fmt.Sprintf("port=%s user=%s "+"password=%s dbname=%s sslmode=disable", port, user, password, dbname)
+	DB, error := gorm.Open("postgres", psqlInfo)
+
+	defer db.Close()
+
+	if error != nil {
 		return nil, err
 	}
-	return db, nil
+	return DB, nil
 }
